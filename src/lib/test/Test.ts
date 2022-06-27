@@ -1,16 +1,15 @@
 import TestConfig from "./TestConfig";
 
 export default class Test {
-
-    //TODO: ADD id + bonus
-
+    id: string;
     input: string;
     output: string;
     config: TestConfig;
     required: boolean;
 
 
-    constructor(input: string, output: string, config: TestConfig, required: boolean = true) {
+    constructor(id: string, input: string, output: string, config: TestConfig, required: boolean = true) {
+        this.id = id;
         this.input = input;
         this.output = output;
         this.config = config;

@@ -55,7 +55,6 @@ export default class GlisseoService {
                     try {
                         codeResult = await this.#glisseoApi.run(assignment.config.language, code, test.input);
                     } catch (err) {
-                        console.log(err);
                         result.tests.push(new TestResult(TestResultStatus.EVALUATOR_FAIL, test, -1));
                         
                         if (test.required)

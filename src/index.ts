@@ -17,16 +17,16 @@ gs.addAssignment(
     new Assignment("assignment1").setConfig({
         language: "csharp",
     }).addTest(
-        new Test("", "Hello World!\n",
-            { timeLimit: 5000 }
+        new Test("basic 1", "1\n2", "3\n",
+            { timeLimit: 1500 }
         )
     ).addTest(
-        new Test("", "Hello Worldaaaa!",
-            { timeLimit: 5000 },
+        new Test("basic 2","10001\n2", "10003\n",
+            { timeLimit: 1500 }
         )
     ).addTest(
-        new Test("", "Hello World!\n",
-            { timeLimit: 800 }
+        new Test("overflow", "30120391203910239019\n2", "?\n",
+            { timeLimit: 1500 }
         )
     )
 );
@@ -43,7 +43,10 @@ namespace Program
     {
         static void Main()
         {
-            Console.WriteLine("Hello World!");
+            int a = int.Parse(Console.ReadLine());
+            int b = int.Parse(Console.ReadLine());
+
+            Console.WriteLine(a + b);
         }
     }
 }`).then(result => {
