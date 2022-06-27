@@ -1,3 +1,4 @@
+import GlisseoApi from "./api/GlisseoApi";
 import GlisseoApiSettings from "./api/GlisseoApiSettings";
 import Assignment from "./assignment/Assignment";
 import Result from "./result/Result";
@@ -7,11 +8,13 @@ import TestResult, { TestResultStatus } from "./result/TestResult";
 export default class GlisseoService {
 
     #apiSettings: GlisseoApiSettings;
+    #glisseoApi: GlisseoApi;
     //todo: fix
     #assignments: Map<string, Assignment> = new Map;
 
     constructor(endpoint: string, password: string) {
         this.#apiSettings = new GlisseoApiSettings(endpoint, password);
+        this.#glisseoApi = new GlisseoApi(this.#apiSettings);
     }
 
     getAssignments(): Assignment[] {
@@ -39,14 +42,15 @@ export default class GlisseoService {
                 run = run.then(async () => {
                     const startTime = new Date().getTime();
                     // Run code with API
-                    await new Promise((resolve, reject) => { setTimeout(() => {resolve("aaa");}, 3000) });
-                    const stdout = "";
+                    const codeResult = await this.#glisseoApi.run(assignment.config.language, code, test.input);
+                    console.log(codeResult);
+                    const stdout = codeResult.stdout;
 
                     const startEnd = new Date().getTime();
                     const timeTaken = startEnd - startTime;
                     // TODO: is timeLimit exceeded? Ok? Check...
 
-                    const testSuccessful = test.evalute(stdout); 
+                    const testSuccessful = test.evalute(stdout);
 
                     // TODO: what is status of this test?
                     const testResult = new TestResult(TestResultStatus.PASSED, test, timeTaken);

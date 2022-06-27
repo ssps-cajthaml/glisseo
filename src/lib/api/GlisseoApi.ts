@@ -1,46 +1,39 @@
-import axios, { Axios } from "axios";
+import axios from "axios";
 import GlisseoApiSettings from "./GlisseoApiSettings";
+
+export interface IApiResponse {
+    stdout: string;
+    stderr: string;
+    error: string;
+}
 
 export default class GlisseoApi {
 
     #settings: GlisseoApiSettings;
 
-    /*
-    curl --request POST \
-     --header 'X-Access-Token: some-secret-token' \
-     --header 'Content-type: application/json' \
-     --data '{"image": "glot/python:latest", "payload": {"language": "python", "files": [{"name": "main.py", "content": "print(42)"}]}}' \
-     --url 'http://<docker-run>/run'*/
-
-    run() {
-        axios.post(this.#settings.endpoint + "/run", {
-            image: "glot/csharp:latest",
-            payload: {
-                language: "csharp",
-                files: [
-                    {
-                        name: "Program.cs",
-                        content: `using System.Collections.Generic;
-
-                        namespace Program
+    run(language: string, code: string, input: string): Promise<IApiResponse> {
+        return new Promise((resolve, reject) => {
+            axios.post(this.#settings.endpoint + "/run", {
+                image: `glot/${language}:latest`,
+                payload: {
+                    language: language,
+                    stdin: input,
+                    files: [
                         {
-                            class Program
-                            {
-                                static void Main()
-                                {
-                                    Console.WriteLine("Hello World!");
-                                }
-                            }
-                        }`
-                    }
-                ]
-            }
-        }, {
-            headers: {
-                'X-Access-Token': this.#settings.password
-            }
-        }).then(response => {
-            console.log(response.data);
+                            name: "Program",
+                            content: code
+                        }
+                    ]
+                }
+            }, {
+                headers: {
+                    'X-Access-Token': this.#settings.password
+                }
+            }).then((response: any) => {
+                const data = response.data as IApiResponse;
+
+                resolve(data);
+            });
         });
     }
 

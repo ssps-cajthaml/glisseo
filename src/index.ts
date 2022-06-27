@@ -18,12 +18,25 @@ gs.addAssignment(
         language: "csharp",
         timeLimit: 3000
     }).addTest(
-        new Test("input", "",
+        new Test("", "Hello World!",
             { memory: 128_000_000, timeLimit: 3000 }
         )
     )
 );
 
-gs.evaluate("assignment1", "XD").then(result => {
+gs.evaluate("assignment1", `
+using System;
+using System.Collections.Generic;
+
+namespace Program
+{
+    class Program
+    {
+        static void Main()
+        {
+            Console.WriteLine("Hello Worldaaa!");
+        }
+    }
+}`).then(result => {
     console.log(result);
 });
