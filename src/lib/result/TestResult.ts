@@ -8,13 +8,13 @@ export enum TestResultStatus {
 }
 
 export default class TestResult {
-    #status: TestResultStatus;
-    #timeTaken: number;
-    #test: Test;
+    status: TestResultStatus;
+    timeTaken: number;
+    test: Test;
 
     constructor(status: TestResultStatus, test: Test, timeTaken: number) {
-        this.#status = status;
-        this.#test = test;
-        this.#timeTaken = timeTaken;
+        this.status = status;
+        this.test = test;
+        this.timeTaken = timeTaken;
     }
 }

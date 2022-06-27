@@ -1,7 +1,6 @@
 import Assignment from "./lib/assignment/Assignment";
 import GlisseoService from "./lib/GlisseoService";
 import Test from "./lib/test/Test";
-import TestConfig from "./lib/test/TestConfig";
 
 if (process.env.NODE_ENV === "dev") {
     require("source-map-support").install();
@@ -19,10 +18,12 @@ gs.addAssignment(
         language: "csharp",
         timeLimit: 3000
     }).addTest(
-        new Test("1", "2",
+        new Test("input", "",
             { memory: 128_000_000, timeLimit: 3000 }
         )
     )
 );
 
-console.log(gs.getAssignments()[0].tests[0]);
+gs.evaluate("assignment1", "XD").then(result => {
+    console.log(result);
+});

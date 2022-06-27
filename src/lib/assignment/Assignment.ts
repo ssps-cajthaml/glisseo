@@ -7,7 +7,6 @@ export default class Assignment {
     config: AssignmentConfig;
     tests : Array<Test>;
 
-
     getId() {
         return this.id;
     }
