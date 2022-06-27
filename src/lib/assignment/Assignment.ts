@@ -1,21 +1,30 @@
+import Test from "../test/Test";
 import AssignmentConfig from "./AssignmentConfig";
 
-export default class Assigment {
+export default class Assignment {
 
-    #id: string;
-    #config: AssignmentConfig;
+    id: string;
+    config: AssignmentConfig;
+    tests : Array<Test>;
 
 
     getId() {
-        return this.#id;
+        return this.id;
     }
 
     setConfig(config: AssignmentConfig) {
-        this.#config = config;
+        this.config = config;
+        return this;
+    }
+
+    addTest(test: Test) {
+        this.tests.push(test);
+        return this;
     }
 
     constructor(id: string) {
-        this.#id = id;
-        this.#config = new AssignmentConfig();
+        this.id = id;
+        this.config = new AssignmentConfig();
+        this.tests = new Array<Test>();
     }
 }

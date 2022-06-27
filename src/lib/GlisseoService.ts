@@ -3,6 +3,7 @@ import Assignment from "./assignment/Assignment";
 
 
 export default class GlisseoService {
+
     #apiSettings: GlisseoApiSettings;
     //todo: fix
     #assignments: Map<string, Assignment> = new Map;
@@ -11,7 +12,11 @@ export default class GlisseoService {
         this.#apiSettings = new GlisseoApiSettings(endpoint, password);
     }
 
-    addAssigment(assignment: Assignment) {
+    getAssignments(): Assignment[] {
+        return Array.from(this.#assignments.values());
+    }
+
+    addAssignment(assignment: Assignment) {
 
         this.#assignments.set(assignment.getId(), assignment);
     }
