@@ -21,4 +21,7 @@ export default class GlisseoService {
         this.#assignments.set(assignment.getId(), assignment);
     }
 
+    addToQueue(id: string, assignment: Assignment) {
+    }
+
 };
