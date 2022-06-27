@@ -1,0 +1,24 @@
+{
+  "name": "glisseo",
+  "version": "1.0.0",
+  "description": "Manager for running test assigments.",
+  "scripts": {
+    "start": "node compile/index.js",
+    "compile": "tsc",
+    "watch-compile": "tsc -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ssps-cajthaml/glisseo.git"
+  },
+  "author": "Matěj Cajthaml & Sebastian Himmer",
+  "bugs": {
+    "url": "https://github.com/ssps-cajthaml/glisseo/issues"
+  },
+  "homepage": "https://github.com/ssps-cajthaml/glisseo#readme",
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "source-map-support": "^0.5.21",
+    "typescript": "^4.7.4"
+  }
+}
