@@ -16,25 +16,22 @@ const gs: GlisseoService = new GlisseoService(endpoint, password);
 gs.addAssignment(
     new Assignment("assignment1").setConfig({
         language: "csharp",
-        timeLimit: 3000
     }).addTest(
         new Test("", "Hello World!\n",
-            { memory: 128_000_000, timeLimit: 3000 }
+            { timeLimit: 5000 }
         )
     ).addTest(
         new Test("", "Hello Worldaaaa!",
-            { memory: 128_000_000, timeLimit: 3000 }
+            { timeLimit: 5000 },
         )
     ).addTest(
         new Test("", "Hello World!\n",
-            { memory: 128_000_000, timeLimit: 800 }
+            { timeLimit: 800 }
         )
     )
 );
 
-// TODO: memory iwll probably not work (remove from configs)
-// TODO: create basic limits as environment in docker
-// TODO: add console logs
+// TODO for Matěj Cajthaml: create basic limits as environment in docker
 
 gs.evaluate("assignment1", `
 using System;

@@ -9,7 +9,6 @@ export default class GlisseoService {
 
     #apiSettings: GlisseoApiSettings;
     #glisseoApi: GlisseoApi;
-    //todo: fix
     #assignments: Map<string, Assignment> = new Map;
 
     constructor(endpoint: string, password: string) {
@@ -22,24 +21,34 @@ export default class GlisseoService {
     }
 
     addAssignment(assignment: Assignment) {
+        console.log("[Glisseo] Adding assignment " + assignment.id);
         this.#assignments.set(assignment.getId(), assignment);
     }
 
     evaluate(assigmentId: string, code: string) {
+        console.log("[Glisseo] Evaluating assignment " + assigmentId);
         return new Promise((resolve, reject) => {
             const assignment = this.#assignments.get(assigmentId);
-            if(!assignment) {
+            if (!assignment) {
                 reject(`Assignment with id ${assigmentId} not found`);
                 return;
             }
 
             const result = new Result();
 
-            const startTime = new Date().getTime();
-
             let run = Promise.resolve();
-            for(let test of assignment.tests) {
+
+            let skipOther = false;
+
+            for (let test of assignment.tests) {
                 run = run.then(async () => {
+
+                    if (skipOther) {
+                        const testResult = new TestResult(TestResultStatus.SKIPPED, test, -1);
+                        result.tests.push(testResult);
+
+                        return;
+                    }
                     const startTime = new Date().getTime();
 
                     let codeResult: IApiResponse;
@@ -48,12 +57,19 @@ export default class GlisseoService {
                     } catch (err) {
                         console.log(err);
                         result.tests.push(new TestResult(TestResultStatus.EVALUATOR_FAIL, test, -1));
+                        
+                        if (test.required)
+                            skipOther = true;
+
                         return;
                     }
 
-                    if(codeResult.error.length !== 0) {
+                    if (codeResult.error.length !== 0) {
                         result.tests.push(new TestResult(TestResultStatus.ERROR, test, -1));
-                        // TODO: skip other if this test was required
+                        
+                        if (test.required)
+                            skipOther = true;
+
                         return;
                     }
 
@@ -62,8 +78,12 @@ export default class GlisseoService {
                     const startEnd = new Date().getTime();
                     const timeTaken = startEnd - startTime;
 
-                    if(timeTaken > test.config.timeLimit) {
+                    if (timeTaken > test.config.timeLimit) {
                         result.tests.push(new TestResult(TestResultStatus.FAILED, test, timeTaken));
+
+                        if (test.required)
+                            skipOther = true;
+
                         return;
                     }
 
@@ -76,10 +96,8 @@ export default class GlisseoService {
             }
 
             run = run.then(() => {
-                // Test finished, resolve main promise
-                const endTime = new Date().getTime();
-                result.timeTaken = endTime - startTime;
-                
+                console.log("[Glisseo] Assignment " + assigmentId + " evaluated.");
+
                 return resolve(result);
             })
 
