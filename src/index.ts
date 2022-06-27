@@ -1,6 +1,12 @@
+import GlisseoApi from "./lib/api/GlisseoApi";
+import GlisseoApiSettings from "./lib/api/GlisseoApiSettings";
 import Assignment from "./lib/assignment/Assignment";
+import AssignmentConfig from "./lib/assignment/AssignmentConfig";
 import GlisseoService from "./lib/GlisseoService";
+import Result from "./lib/result/Result";
+import TestResult from "./lib/result/TestResult";
 import Test from "./lib/test/Test";
+import TestConfig from "./lib/test/TestConfig";
 
 if (process.env.NODE_ENV === "dev") {
     require("source-map-support").install();
@@ -8,6 +14,18 @@ if (process.env.NODE_ENV === "dev") {
 
 console.log("[Glisseo] Starting...");
 
+export {
+    GlisseoApi,
+    GlisseoApiSettings,
+    Assignment,
+    AssignmentConfig,
+    Result,
+    TestResult,
+    Test,
+    TestConfig,
+    GlisseoService,
+}
+/*
 const endpoint = process.env.GLISSEO_ENDPOINT || "https://glisseo.cajthaml.eu";
 const password = process.env.GLISSEO_PASSWORD || "kouminek-je-kominek-ktery-kouma";
 
@@ -51,4 +69,4 @@ namespace Program
     }
 }`).then(result => {
     console.log(result);
-});
+});*/
