@@ -8,8 +8,8 @@ if (process.env.NODE_ENV === "dev") {
 
 console.log("[Glisseo] Starting...");
 
-const endpoint = process.env.GLISSEO_ENDPOINT || "http://localhost:8080";
-const password = process.env.GLISSEO_PASSWORD || "";
+const endpoint = process.env.GLISSEO_ENDPOINT || "https://glisseo.cajthaml.eu";
+const password = process.env.GLISSEO_PASSWORD || "kouminek-je-kominek-ktery-kouma";
 
 const gs: GlisseoService = new GlisseoService(endpoint, password);
 
