@@ -33,6 +33,8 @@ export default class GlisseoApi {
                 const data = response.data as IApiResponse;
 
                 resolve(data);
+            }).catch((error: any) => {
+                reject(error);
             });
         });
     }

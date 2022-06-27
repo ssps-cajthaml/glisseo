@@ -1,4 +1,4 @@
-import GlisseoApi from "./api/GlisseoApi";
+import GlisseoApi, { IApiResponse } from "./api/GlisseoApi";
 import GlisseoApiSettings from "./api/GlisseoApiSettings";
 import Assignment from "./assignment/Assignment";
 import Result from "./result/Result";
@@ -41,19 +41,35 @@ export default class GlisseoService {
             for(let test of assignment.tests) {
                 run = run.then(async () => {
                     const startTime = new Date().getTime();
-                    // Run code with API
-                    const codeResult = await this.#glisseoApi.run(assignment.config.language, code, test.input);
-                    console.log(codeResult);
+
+                    let codeResult: IApiResponse;
+                    try {
+                        codeResult = await this.#glisseoApi.run(assignment.config.language, code, test.input);
+                    } catch (err) {
+                        console.log(err);
+                        result.tests.push(new TestResult(TestResultStatus.EVALUATOR_FAIL, test, -1));
+                        return;
+                    }
+
+                    if(codeResult.error.length !== 0) {
+                        result.tests.push(new TestResult(TestResultStatus.ERROR, test, -1));
+                        // TODO: skip other if this test was required
+                        return;
+                    }
+
                     const stdout = codeResult.stdout;
 
                     const startEnd = new Date().getTime();
                     const timeTaken = startEnd - startTime;
-                    // TODO: is timeLimit exceeded? Ok? Check...
+
+                    if(timeTaken > test.config.timeLimit) {
+                        result.tests.push(new TestResult(TestResultStatus.FAILED, test, timeTaken));
+                        return;
+                    }
 
                     const testSuccessful = test.evalute(stdout);
 
-                    // TODO: what is status of this test?
-                    const testResult = new TestResult(TestResultStatus.PASSED, test, timeTaken);
+                    const testResult = new TestResult(testSuccessful ? TestResultStatus.PASSED : TestResultStatus.FAILED, test, timeTaken);
 
                     result.tests.push(testResult);
                 });
