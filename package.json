@@ -1,6 +1,7 @@
 {
+  "type": "module",
   "name": "glisseo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Manager for running test assigments.",
   "scripts": {
     "start": "node compile/index.js",
