@@ -2,22 +2,19 @@
   "compilerOptions": {
     "target": "es2018",
     "module": "commonjs",
-    "outDir": "./compile",
+    "outDir": "./lib",
     "noImplicitAny": true,
     "strictNullChecks": true,
     "skipLibCheck": true,
     "inlineSourceMap": true,
     "strict": true,
+    "declaration": true,
     "types": ["node"]
   },
   "include": [
     "./src/**/*.ts"
   ],
   "exclude": [
-    "node_modules/",
-    "config",
-    "log",
-    "dist",
-    "build"
+    "node_modules/"
   ]
 }
