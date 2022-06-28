@@ -1,5 +1,4 @@
 {
-  "type": "module",
   "name": "glisseo",
   "version": "1.0.2",
   "description": "Manager for running test assigments.",
