@@ -78,7 +78,7 @@ export default class GlisseoService {
                     const timeTaken = startEnd - startTime;
 
                     if (timeTaken > test.config.timeLimit) {
-                        result.tests.push(new TestResult(TestResultStatus.FAILED, test, timeTaken));
+                        result.tests.push(new TestResult(TestResultStatus.TIME_LIMIT, test, timeTaken));
 
                         if (test.required)
                             skipOther = true;

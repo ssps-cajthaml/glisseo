@@ -4,7 +4,8 @@ export declare enum TestResultStatus {
     FAILED = "FAILED",
     SKIPPED = "SKIPPED",
     ERROR = "ERROR",
-    EVALUATOR_FAIL = "EVALUATOR_FAIL"
+    EVALUATOR_FAIL = "EVALUATOR_FAIL",
+    TIME_LIMIT = "TIME_LIMIT"
 }
 export default class TestResult {
     status: TestResultStatus;

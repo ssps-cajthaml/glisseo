@@ -5,7 +5,8 @@ export enum TestResultStatus {
     FAILED = "FAILED", // incorrect output
     SKIPPED = "SKIPPED", // skipped because of a previous failure
     ERROR = "ERROR", // code error, failed to compile, etc.
-    EVALUATOR_FAIL = "EVALUATOR_FAIL" // failed to evaluate the test 
+    EVALUATOR_FAIL = "EVALUATOR_FAIL", // failed to evaluate the test ,
+    TIME_LIMIT = "TIME_LIMIT" // time limit exceeded
 }
 
 export default class TestResult {
