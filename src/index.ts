@@ -49,8 +49,6 @@ gs.addAssignment(
     )
 );
 
-// TODO for Matěj Cajthaml: create basic limits as environment in docker
-
 gs.evaluate("assignment1", `
 using System;
 using System.Collections.Generic;
